@@ -19,7 +19,6 @@ Mã nguồn thực hành môn Xử Lý Tín Hiệu Số trên phần mềm SciLa
   - `bai24()`: Bài tập mở rộng 2.4 (Phân tách và tái thiết chẵn - lẻ).
   - `bai26()`: Bài tập mở rộng 2.6 (Kiểm chứng tính bất biến thời gian $y(n) = x(n^2)$).
 - `lab3_bonus.sci`: Script thực thi tự động toàn bộ 4 bài tập mở rộng/bonus của Lab 3 (Bài 2.1, 2.2, 2.4, 2.6).
-- `generate_all_plots.sci`: Script tự động xuất toàn bộ đồ thị dạng sóng chuẩn SciLab sang ảnh PNG độ nét cao.
 
 ## Hướng dẫn thực thi
 
