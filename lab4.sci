@@ -116,16 +116,19 @@ function [y_conv, y_matrix, Ex, Ey] = ex6_linear_conv(plot_flag)
         plot2d3(ny + 0.06, y_conv, style=5);
         plot(ny + 0.06, y_conv, 'rd');
         ax1 = gca();
-        ax1.data_bounds = [-0.6, -5; 6.6, 5];
+        ax1.data_bounds = [-0.8, -5.5; 7.2, 7.5];
         title('Discrete Signals x(n) and y(n) on Same Axes');
         xlabel('n'); ylabel('Amplitude');
-        legend(['x(n) (Input Signal)', 'y(n) (Linear Convolution Output)'], 1);
+        legend(['x(n) (Input Signal)', 'y(n) (Linear Convolution Output)'], 2);
+        leg1 = ax1.children(1);
+        leg1.background = color('white');
+        leg1.fill_mode = 'on';
         xgrid;
-        
+
         subplot(2, 1, 2);
         bar([1, 2], [Ex, Ey]);
         ax2 = gca();
-        ax2.data_bounds = [0.2, 0; 2.8, 52];
+        ax2.data_bounds = [0.2, 0; 2.8, 55];
         ax2.x_ticks = tlist(['ticks', 'locations', 'labels'], [1; 2], ['Ex (Input Signal = 19)'; 'Ey (Linear Convolution = 42)']);
         title('Energy of Discrete Signals: Ex = 19, Ey = 42');
         ylabel('Energy');
@@ -187,16 +190,19 @@ function [y_circ_shift, y_circ_mat, Ex, Ey] = ex7_circular_conv(plot_flag)
         plot2d3(n + 0.06, y_circ_mat, style=5);
         plot(n + 0.06, y_circ_mat, 'rd');
         ax1 = gca();
-        ax1.data_bounds = [-0.6, -5.5; 4.6, 5.5];
+        ax1.data_bounds = [-0.6, -5.5; 4.6, 7.5];
         title('Periodic Signals x(n) and Circular Convolution Output y(n) on Same Axes (N = 5)');
         xlabel('n'); ylabel('Amplitude');
         legend(['x(n) (Periodic Input)', 'y(n) (Circular Convolution Output)'], 1);
+        leg2 = ax1.children(1);
+        leg2.background = color('white');
+        leg2.fill_mode = 'on';
         xgrid;
-        
+
         subplot(2, 1, 2);
         bar([1, 2], [Ex, Ey]);
         ax2 = gca();
-        ax2.data_bounds = [0.2, 0; 2.8, 62];
+        ax2.data_bounds = [0.2, 0; 2.8, 65];
         ax2.x_ticks = tlist(['ticks', 'locations', 'labels'], [1; 2], ['Ex (Input Signal = 19)'; 'Ey (Circular Convolution = 50)']);
         title('Energy of Discrete Signals: Ex = 19, Ey = 50');
         ylabel('Energy');
