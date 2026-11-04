@@ -49,6 +49,21 @@ function [s, f, mag] = ex4_audio(plot_flag)
     end
 endfunction
 
+function ex5_image(img_file, watermark_file)
+    if argn(2) < 1 then
+        img_file = 'peppers.png';
+    end
+    if argn(2) < 2 then
+        watermark_file = 'bk_figure.jpg';
+    end
+    
+    disp('=== EXERCISE 5: DIGITAL IMAGE PROCESSING ===');
+    disp('Target image: ' + img_file);
+    disp('Watermark image: ' + watermark_file);
+    disp('Image processing operations: Grayscale, Histogram Equalization, Median Blur, Alpha-Blending Watermarking.');
+    disp('Run with IPCV module: atomsLoad(""IPCV"")');
+endfunction
+
 function [y_conv, y_matrix, Ex, Ey] = ex6_linear_conv(plot_flag)
     if argn(2) < 1 then
         plot_flag = %T;
