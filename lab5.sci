@@ -1,33 +1,18 @@
-// =========================================================================
-// TRUONG DAI HOC BACH KHOA - DHQG TP. HO CHI MINH
-// KHOA DIEN - DIEN TU | BO MON VIEN THONG
-// MON HOC: XU LY TIN HIEU SO (CO2036)
-// -------------------------------------------------------------------------
-// MA NGUON THUC HANH LAB 5: PHEP BIEN DOI Z VA KHAO SAT HE THONG LTI
-// Sinh vien thuc hien: Tran Dang Khoa (MSSV: 2311645) - Lop L01 - HK261
-// GVHD: Pham Cong Thai
-// =========================================================================
-
 clear;
 clc;
 close;
 
 out_fig_dir = "/work/LAB-XLTHS/Report/Lab/LabsReport/Labs/Lab_5/figures/";
 
-// =========================================================================
-// BAI TAP 1: DAP UNG XUNG CUA HE THONG y(n) - y(n-2) = x(n)
-// =========================================================================
 printf("\n=================================================================\n");
 printf("BAI TAP 1: KHAO SAT HE THONG y(n) - y(n-2) = x(n)\n");
 printf("=================================================================\n");
 
 N1 = 15;
 n1 = 0:(N1-1);
-// Dau vao xung don vi delta(n)
 x1 = zeros(1, N1);
 x1(1) = 1;
 
-// Mo phong de quy: y(n) = y(n-2) + x(n) voi dieu kien nghi y(-1)=y(-2)=0
 h1_sim = zeros(1, N1);
 for k = 1:N1
     prev2 = 0;
@@ -37,7 +22,6 @@ for k = 1:N1
     h1_sim(k) = prev2 + x1(k);
 end
 
-// Tinh theo cong thuc ly thuyet: h(n) = 0.5 * (1 + (-1)^n) * u(n)
 h1_theory = 0.5 * (1 + (-1).^n1);
 
 printf("Dap ung xung mo phong (10 mau dau): \n");
@@ -45,15 +29,14 @@ disp(h1_sim(1:10));
 printf("Dap ung xung ly thuyet (10 mau dau): \n");
 disp(h1_theory(1:10));
 
-// Ve do thi dap ung xung h(n)
 f1 = figure("Figure_name", "Lab 5 - Bai tap 1: Dap ung xung h(n)", "Position", [100, 100, 800, 450]);
 f1.background = color("white");
 
-plot2d3(n1, h1_sim, 2); // blue stems
+plot2d3(n1, h1_sim, 2);
 poly1 = gca();
 poly1.children.children.thickness = 2;
 
-plot(n1, h1_sim, "bo"); // circle markers
+plot(n1, h1_sim, "bo");
 h_axes = gca();
 h_axes.data_bounds = [-1, -0.2; N1, 1.4];
 h_axes.x_location = "origin";
@@ -66,37 +49,27 @@ xs2png(f1, out_fig_dir + "ex1_h_stem.png");
 close(f1);
 
 
-// =========================================================================
-// BAI TAP 2: TINH TICH CHAP BANG PHEP BIEN DOI Z
-// =========================================================================
 printf("\n=================================================================\n");
 printf("BAI TAP 2: TINH TICH CHAP BANG BIEN DOI Z\n");
 printf("=================================================================\n");
 
-// Cau (a): x1 = [1, 2, 3, 4, 5], x2 = [1, 1, 1]
 x2a_1 = [1, 2, 3, 4, 5];
 x2a_2 = [1, 1, 1];
-// Nhan da thuc X1(z) * X2(z) tuong duong ham convol()
 y2a = convol(x2a_1, x2a_2);
 
 printf("Cau 2a: Tich chap x1 * x2 = \n");
 disp(y2a);
 
-// Cau (b): x1(n) = (1/5)^n u(n), x2(n) = 2^n u(n)
-// Ly thuyet: y(n) = [ -1/9 * (1/5)^n + 10/9 * 2^n ] * u(n)
 nb = 0:5;
 yb_theory = -(1/9) * (0.2).^nb + (10/9) * (2).^nb;
 printf("Cau 2b (6 mau dau ly thuyet): \n");
 disp(yb_theory);
 
-// Cau (c): x1(n) = n*u(n), x2(n) = 2^n*u(n-1)
-// Ly thuyet: y(n) = 2 * (2^n - n - 1) * u(n)
 nc = 0:5;
 yc_theory = 2 * (2.^nc - nc - 1);
 printf("Cau 2c (6 mau dau ly thuyet): \n");
 disp(yc_theory);
 
-// Ve do thi Cau 2a
 f2 = figure("Figure_name", "Lab 5 - Bai tap 2a: Tich chap", "Position", [100, 100, 800, 500]);
 f2.background = color("white");
 
@@ -110,7 +83,7 @@ title("Input Signal x1(n) = [1, 2, 3, 4, 5]", "fontsize", 2);
 ylabel("x1(n)");
 
 subplot(3, 1, 2);
-plot2d3(0:2, x2a_2, 5); // red stems
+plot2d3(0:2, x2a_2, 5);
 plot(0:2, x2a_2, "rd");
 ax2_2 = gca();
 ax2_2.data_bounds = [-1, 0; 7, 2];
@@ -119,7 +92,7 @@ title("Input Signal x2(n) = [1, 1, 1]", "fontsize", 2);
 ylabel("x2(n)");
 
 subplot(3, 1, 3);
-plot2d3(0:6, y2a, 3); // green stems
+plot2d3(0:6, y2a, 3);
 plot(0:6, y2a, "g^");
 ax2_3 = gca();
 ax2_3.data_bounds = [-1, 0; 7, 14];
@@ -132,18 +105,14 @@ xs2png(f2, out_fig_dir + "ex2a_conv_stem.png");
 close(f2);
 
 
-// =========================================================================
-// BAI TAP 4: KHAO SAT HE THONG BAC 1: y(n) = 0.7y(n-1) + x(n)
-// =========================================================================
 printf("\n=================================================================\n");
 printf("BAI TAP 4: HE THONG BAC 1 y(n) = 0.7y(n-1) + x(n)\n");
 printf("=================================================================\n");
 
 N4 = 20;
 n4 = 0:(N4-1);
-x4 = ones(1, N4); // Buoc nhay don vi u(n)
+x4 = ones(1, N4);
 
-// Mo phong de quy
 y4_sim = zeros(1, N4);
 for k = 1:N4
     prev = 0;
@@ -153,7 +122,6 @@ for k = 1:N4
     y4_sim(k) = 0.7 * prev + x4(k);
 end
 
-// Cong thuc ly thuyet: y(n) = (10 - 7 * 0.7^n) / 3
 y4_theory = (10 - 7 * (0.7).^n4) / 3;
 
 printf("Dap ung buoc nhay mo phong (10 mau dau): \n");
@@ -179,9 +147,6 @@ xs2png(f4, out_fig_dir + "ex4_step_response.png");
 close(f4);
 
 
-// =========================================================================
-// BAI TAP 5: HE THONG BAC 2: y(n) = 2y(n-1) - 3y(n-2) + x(n) + x(n-1)
-// =========================================================================
 printf("\n=================================================================\n");
 printf("BAI TAP 5: HE THONG BAC 2 y(n) = 2y(n-1) - 3y(n-2) + x(n) + x(n-1)\n");
 printf("=================================================================\n");
@@ -189,7 +154,6 @@ printf("=================================================================\n");
 N5 = 8;
 n5 = 0:(N5-1);
 
-// 1. Zero-Input Response y_zi(n) voi y(-1) = 1, y(-2) = 1, x(n) = 0
 y_zi_sim = zeros(1, N5);
 for k = 1:N5
     p1 = (k == 1) * 1 + (k > 1) * y_zi_sim(max(1, k - 1));
@@ -197,10 +161,8 @@ for k = 1:N5
     y_zi_sim(k) = 2 * p1 - 3 * p2;
 end
 
-// Cong thuc ly thuyet y_zi(n)
 r5 = sqrt(3);
 theta5 = atan(sqrt(2));
-// A = -0.5 + j*sqrt(2) => y_zi(n) = 2*Re{ A * (r * exp(j*theta))^n }
 y_zi_theory = zeros(1, N5);
 for k = 1:N5
     curr_n = k - 1;
@@ -214,7 +176,6 @@ disp(y_zi_sim);
 printf("y_zi(n) ly thuyet: \n");
 disp(y_zi_theory);
 
-// 2. Zero-State Response y_zs(n) voi y(-1)=y(-2)=0, x(n) = 2^n u(n)
 x5 = 2.^n5;
 y_zs_sim = zeros(1, N5);
 for k = 1:N5
@@ -230,7 +191,6 @@ for k = 1:N5
     y_zs_sim(k) = 2 * p1 - 3 * p2 + x_curr + x_prev;
 end
 
-// Cong thuc ly thuyet y_zs(n) = 2 * 2^n + (-0.5 - j*sqrt(2)/2)*(1+j*sqrt(2))^n + (-0.5 + j*sqrt(2)/2)*(1-j*sqrt(2))^n
 y_zs_theory = zeros(1, N5);
 for k = 1:N5
     curr_n = k - 1;
@@ -245,7 +205,6 @@ disp(y_zs_sim);
 printf("y_zs(n) ly thuyet: \n");
 disp(y_zs_theory);
 
-// 3. Total Response y(n) = y_zi(n) + y_zs(n)
 y_total_sim = y_zi_sim + y_zs_sim;
 y_total_theory = y_zi_theory + y_zs_theory;
 
@@ -254,12 +213,11 @@ disp(y_total_sim);
 printf("Total y(n) ly thuyet: \n");
 disp(y_total_theory);
 
-// Ve do thi 3 dap ung cua Bai 5
 f5 = figure("Figure_name", "Lab 5 - Bai tap 5: Cac dap ung", "Position", [100, 100, 800, 600]);
 f5.background = color("white");
 
 subplot(3, 1, 1);
-plot2d3(n5, y_zi_sim, 5); // red stems
+plot2d3(n5, y_zi_sim, 5);
 plot(n5, y_zi_sim, "rd");
 ax5_1 = gca();
 ax5_1.grid = [color("gray"), color("gray")];
@@ -267,7 +225,7 @@ title("Zero-Input Response y_zi(n) with Initial Conditions y(-1)=y(-2)=1", "font
 ylabel("y_zi(n)");
 
 subplot(3, 1, 2);
-plot2d3(n5, y_zs_sim, 2); // blue stems
+plot2d3(n5, y_zs_sim, 2);
 plot(n5, y_zs_sim, "bo");
 ax5_2 = gca();
 ax5_2.grid = [color("gray"), color("gray")];
@@ -275,7 +233,7 @@ title("Zero-State Response y_zs(n) with Input x(n) = 2^n u(n)", "fontsize", 2);
 ylabel("y_zs(n)");
 
 subplot(3, 1, 3);
-plot2d3(n5, y_total_sim, 3); // green stems
+plot2d3(n5, y_total_sim, 3);
 plot(n5, y_total_sim, "g^");
 ax5_3 = gca();
 ax5_3.grid = [color("gray"), color("gray")];
